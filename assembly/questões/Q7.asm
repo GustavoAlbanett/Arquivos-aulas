@@ -11,6 +11,7 @@ main:
 	lw $t1, n   # t1 = n
 	subi $t1, $t1, 1
 	
+<<<<<<< HEAD
 	li $t2, 0   # t2 = segundo i
 	
 	la $s0, vet
@@ -22,11 +23,27 @@ comparacao:
 	lw $s2, 4($s0)
 
 	blt $s2, $t3, menor	
+=======
+	li $t4, 0   # t4 = segundo i
+	la $s0, vet
+	li $t5, 0  # t5 = menor
+	
+	
+	
+comparacao:
+	bge $t0, $t1, loopTroca
+	
+	lw $t2, ($s0)
+	lw $t3, 4($s0)
+	
+	blt $t3, $t2, menor
+>>>>>>> 1dcd7f98101e995daff36ce6f08fb9a56b569c89
 	
 	addi $s0, $s0, 4
 	addi $t0, $t0, 1
 	
 	j comparacao
+<<<<<<< HEAD
 menor:	
 	move $t3, $s2
 	move $s1 , $s0   # $s1 = posição do menor
@@ -64,15 +81,45 @@ reset:
 	li $t0, 0     #reseta ponteiro
 	la $s0, vet  #reseta o vetor
 	addi $t1, $t1, 1
+=======
+	
+menor:	
+	lw $t5, ($s0)
+	move $s1, $s0
+	
+	j comparacao
+	
+loopTroca:
+	
+	mul $s0, $t4, 4
+	
+	sw $t5, ($s0)
+	addi $t4, $t4, 1
+	
+	move $t0, $t4
+	
+	bge $t4, $t1, reset
+	j comparacao
+
+reset:
+	li $t0, 0
+>>>>>>> 1dcd7f98101e995daff36ce6f08fb9a56b569c89
 	j loopPrint
 
 loopPrint:
 	bge $t0, $t1, end
+<<<<<<< HEAD
 	
 	lw $s1, ($s0)
 	
 	li $v0, 1
 	move $a0, $s1
+=======
+	lw $s1, ($s0)
+	
+	li $v0, 1
+	move $a0, $s0
+>>>>>>> 1dcd7f98101e995daff36ce6f08fb9a56b569c89
 	syscall
 	
 	li $v0, 4
@@ -86,4 +133,8 @@ loopPrint:
 end:
 
 	li $v0, 10
+<<<<<<< HEAD
 	syscall
+=======
+	syscall
+>>>>>>> 1dcd7f98101e995daff36ce6f08fb9a56b569c89
