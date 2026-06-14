@@ -9,7 +9,14 @@ public class ListaEncadeada{
 		this.inicio = null;
 		this.tamanho = 0;
 	}
-	
+
+	public static void main(String[] args){
+		ListaEncadeada Lista = new ListaEncadeada();
+		Lista.adicionarInicio(10);
+		Lista.adicionarInicio(20);
+		Lista.adicionarInicio(100);
+		Lista.imprimir();
+	}
 		
 		public void imprimir(){
 			No aux = inicio;
@@ -21,20 +28,13 @@ public class ListaEncadeada{
 		}
 		
 		public void adicionarInicio(int valor){
-			No novo = new NO(valor);
+			No novo = new No(valor);
 			novo.proximo = inicio;
 			inicio = novo;
 			tamanho ++;
 		}
 	
 	
-	public static void main(String[] args){
-		ListaEncadeada lista = new listaEncadeada();
-		Lista.adicionarInicio(10);
-		Lista.adicionarInicio(20);
-		Lista.adicionarInicio(100);
-		Lista.imprimir();
-	}
 		private class No{
 		int valor;
 		No proximo;
