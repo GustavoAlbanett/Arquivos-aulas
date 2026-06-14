@@ -1,47 +1,87 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListaEncadeada{
-	No inicio;
-	int tamanho;
+public class ListaEncadeada {
 	
-	public ListaEncadeada(){
+	public static void main(String[] args) {
+		ListaEncadeada lista = new ListaEncadeada();
+		lista.adicionarInicio(10);
+		lista.adicionarInicio(20);
+		lista.adicionarFim(10);
+		lista.adicionarInicio(100);
+		lista.removerFim();
+		lista.imprimir();
+	 }
+ 
+	 No inicio;
+	 int tamanho;
+	 
+	 public ListaEncadeada() {
 		this.inicio = null;
 		this.tamanho = 0;
-	}
+	 }
+	 
+	 public void adicionarInicio(int valor) {
+		 No novo = new No(valor);
+		 novo.proximo = inicio;
+		 inicio = novo;
+		 tamanho++;
+	 }
+	 
+	 public void adicionarFim(int valor){
+		 No novo = new No(valor);
+		 if(inicio == null){
+			 inicio = novo;
+		 }else{
+			 No aux = inicio;
+			 while(aux.proximo != null){
+				 aux = aux.proximo;
+			 }
+			aux.proximo = novo;
+			tamanho++;
+		 }
 
-	public static void main(String[] args){
-		ListaEncadeada Lista = new ListaEncadeada();
-		Lista.adicionarInicio(10);
-		Lista.adicionarInicio(20);
-		Lista.adicionarInicio(100);
-		Lista.imprimir();
-	}
-		
-		public void imprimir(){
-			No aux = inicio;
-			while(aux != null){
-				System.out.println(aux.valor + " ");
-				aux = aux.proximo;
-			}
-			System.out.println();
-		}
-		
-		public void adicionarInicio(int valor){
-			No novo = new No(valor);
-			novo.proximo = inicio;
-			inicio = novo;
-			tamanho ++;
-		}
-	
-	
-		private class No{
-		int valor;
-		No proximo;
-		
-		No(int valor){
-			this.valor = valor;
-			this.proximo = null;	
-		}
-	}
+	 }
+	 
+	 public void removerInicio(){
+		 if(inicio != null){
+			 inicio = inicio.proximo;
+			 tamanho--;
+		 }else{
+			 System.out.println("Lista vazia");
+		 }
+	 }
+	 
+	 public void removerFim(){
+		 No aux = inicio;
+		 if(inicio == null) return;
+		 if(inicio.proximo == null){
+			 inicio = null;
+			 return;
+		 }
+		 while(aux.proximo.proximo != null){
+			 aux = aux.proximo;
+		 }
+		 aux.proximo = null;
+		 tamanho --;
+	 }
+	 
+	 public void imprimir() {
+		 No aux = inicio;
+		 while(aux!=null) {
+			 System.out.print(aux.valor+" ");
+			 aux = aux.proximo; 
+		 }
+		 System.out.println();
+	 }
+	 
+	 
+	 private class No{
+		 int valor;
+		 No proximo;
+		 No(int valor){
+		 this.valor = valor;
+		 this.proximo = null;
+		 }
+	 }
 }
