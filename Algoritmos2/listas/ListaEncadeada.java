@@ -16,6 +16,9 @@ public class ListaEncadeada {
 	 No inicio;
 	 int tamanho;
 	 
+	 
+
+	 
 	 public ListaEncadeada() {
 		this.inicio = null;
 		this.tamanho = 0;
@@ -27,6 +30,7 @@ public class ListaEncadeada {
 		 inicio = novo;
 		 tamanho++;
 	 }
+	
 	 
 	 public void adicionarFim(int valor){
 		 No novo = new No(valor);
@@ -40,7 +44,6 @@ public class ListaEncadeada {
 			aux.proximo = novo;
 			tamanho++;
 		 }
-
 	 }
 	 
 	 public void removerInicio(){
@@ -65,6 +68,8 @@ public class ListaEncadeada {
 		 aux.proximo = null;
 		 tamanho --;
 	 }
+	 
+
 	 
 	 public void imprimir() {
 		 No aux = inicio;
