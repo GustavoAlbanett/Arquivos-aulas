@@ -7,8 +7,7 @@ public class EstudoLista{
 		lista.adcInicio(10);
 		lista.adcInicio(20);
 		lista.adcInicio(30);
-		lista.adcFinal(40);
-		lista.adcApos(50, 100);
+		lista.removerPorInd(2);
 		lista.imprimir();
 
 	}
@@ -74,21 +73,20 @@ class ListaEncadeada{
 		
 	}
 	
-	public void adcApos(int num, int apos){
-		No novo = new No(num);
-		No aux = inicio;
-		int contador = 0;
-		while(aux.valor != apos){
-			contador++;
-			if(contador >= tamanho)return;
-			aux = aux.proximo;
-
-		}
-		novo.proximo = aux.proximo;
-		aux.proximo = novo;
-		tamanho++;
-		
-	}
+	 public void adcApos(int num, int apos){
+		 if(inicio == null)return;
+		 No aux = inicio;
+		 while(aux.valor != apos){
+			 aux = aux.proximo;
+		 }
+		 if(aux.proximo == null) return;
+		 
+		 No novo = new No(num);
+		 novo.proximo = aux.proximo;
+		 aux.proximo = novo;
+		 tamanho++;
+	 }
+	 
 	 public boolean estaPresente(int num){
 		 No aux = inicio;
 		 while( aux != null){
@@ -103,6 +101,17 @@ class ListaEncadeada{
 	 public void contarItens(){
 		System.out.println(tamanho);
 	 }
+	
+	public void removerPorInd(int num){
+		int contador = 1;
+		No aux = inicio;
+		while(aux != null && contador != num){
+			aux = aux.proximo;
+			contador++;
+		}
+		aux.proximo = aux.proximo.proximo;
+		tamanho--;
+	}
 	
 	public void removerUltimo(){
 		No aux = inicio;

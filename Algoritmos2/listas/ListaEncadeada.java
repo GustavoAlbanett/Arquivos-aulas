@@ -9,15 +9,13 @@ public class ListaEncadeada {
 		lista.adicionarInicio(20);
 		lista.adicionarFim(10);
 		lista.adicionarInicio(100);
+		lista.adicionarApos(30, 10);
 		lista.removerFim();
 		lista.imprimir();
 	 }
  
 	 No inicio;
 	 int tamanho;
-	 
-	 
-
 	 
 	 public ListaEncadeada() {
 		this.inicio = null;
@@ -30,7 +28,6 @@ public class ListaEncadeada {
 		 inicio = novo;
 		 tamanho++;
 	 }
-	
 	 
 	 public void adicionarFim(int valor){
 		 No novo = new No(valor);
@@ -44,6 +41,20 @@ public class ListaEncadeada {
 			aux.proximo = novo;
 			tamanho++;
 		 }
+	 }
+		
+	 public void adicionarApos(int num, int apos){
+		 if(inicio == null)return;
+		 No aux = inicio;
+		 while(aux.valor != apos){
+			 aux = aux.proximo;
+		 }
+		 if(aux.proximo == null) return;
+		 
+		 No novo = new No(num);
+		 novo.proximo = aux.proximo;
+		 aux.proximo = novo;
+		 tamanho++;
 	 }
 	 
 	 public void removerInicio(){
@@ -69,8 +80,6 @@ public class ListaEncadeada {
 		 tamanho --;
 	 }
 	 
-
-	 
 	 public void imprimir() {
 		 No aux = inicio;
 		 while(aux!=null) {
@@ -79,8 +88,7 @@ public class ListaEncadeada {
 		 }
 		 System.out.println();
 	 }
-	 
-	 
+	  
 	 private class No{
 		 int valor;
 		 No proximo;
