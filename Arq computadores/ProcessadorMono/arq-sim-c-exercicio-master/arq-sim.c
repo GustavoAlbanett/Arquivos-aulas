@@ -84,13 +84,13 @@ void writeBack(Instrucao codigos, int ULA, int ciclo){
 			break;
 
 		case 15: // LOAD
-			regs[codigos.destino] = memoria[regs[codigos.reg1]];
 			printf("Ciclo %d: LOAD -> R%d = R%d(%d)\n", ciclo, codigos.destino, codigos.reg1, regs[codigos.destino]);
+			regs[codigos.destino] = memoria[regs[codigos.reg1]];
 			break;
 
 		case 16: // STORE
-			memoria[regs[codigos.reg1]] = regs[codigos.reg2];
 			printf("Ciclo %d: STORE -> Mem[%d] = R%d(%d)\n", ciclo, regs[codigos.reg1], codigos.reg2, regs[codigos.reg2]);
+			memoria[regs[codigos.reg1]] = regs[codigos.reg2];
 			break;
 
 		default:
@@ -111,7 +111,6 @@ void writeBack(Instrucao codigos, int ULA, int ciclo){
 
 		case 3: // MOV
 			regs[codigos.reg] = codigos.imediato;
-			printf("%d\n",regs[codigos.reg]);
 			printf("Ciclo %d: MOV -> R%d <- %d\n", ciclo, codigos.reg, codigos.imediato);
 			break;
 		
@@ -144,7 +143,7 @@ int execucao(Instrucao codigos, int ciclo){
 		case 3 : // 3    DIV
 			if (regs[codigos.reg2] == 0) {
 				printf("Erro Ciclo %d: divisao por zero.\n", ciclo);
-				return 0;
+				exit(0);
 			}
 			ULA = regs[codigos.reg1] / regs[codigos.reg2];
 			break;
