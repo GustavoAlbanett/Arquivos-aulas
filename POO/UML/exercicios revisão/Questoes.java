@@ -1,6 +1,16 @@
 public class Questoes{
 	public static void main(String[] args){
-	
+		Usuario user = new Usuario("0001", "Gustavo", "1342424-01");
+		Funcionario func = new Funcionario("Atendente", "Tavips", "1231231312-42");
+		Livro livro = new Livro("memorias postumas", "Machado de Assis");
+		Biblioteca bib = new Biblioteca();
+		
+		bib.adicionarLivro(livro);
+		bib.adicionarFuncionario(func);
+		bib.adicionarUsuario(user);
+		bib.realizarEmprestimo(user, livro, func);
+		bib.mostrarLivros();
+		bib.mostrarEmprestimo();
 	}
 }
 // Q24
@@ -87,8 +97,13 @@ class Biblioteca{
 		qtdFuncionarios++;
 	}
 	void realizarEmprestimo(Usuario user, Livro livro, Funcionario funcionario){
-		this.emprestimos[qtdEmprestimos] = new Emprestimo(user, livro, funcionario);
-		qtdEmprestimos++;
+		if(livro.isDisponivel()){
+			this.emprestimos[qtdEmprestimos] = new Emprestimo(user, livro, funcionario);
+			qtdEmprestimos++;
+			livro.emprestar();
+		}else{
+			System.out.println("livro indisponível");
+		}
 	}
 	void mostrarLivros(){
 		for(int i = 0; i < this.qtdLivro; i++){
@@ -125,7 +140,7 @@ class Emprestimo {
 class Livro{
 	String titulo;
 	String autor;
-	boolean disponivel;
+	boolean disponivel = true;
 	
 	Livro(String titulo, String autor){
 		this.titulo = titulo;

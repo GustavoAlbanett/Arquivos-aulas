@@ -33,9 +33,9 @@ class Animal{
 }
 
 class Cachorro extends Animal{
-    public void fale(){
-    System.out.println("Au au");
-    }
+    //public void fale(){
+    //System.out.println("Au au");
+    //}
 }
 
 class Gato extends Animal{
