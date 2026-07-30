@@ -1,10 +1,10 @@
 <?php 
 // conexão banco de dados
 {
-    $host = "localhost";
-    $user = "root";
-    $senha = "ferrari123";
-    $banco = "todolist";
+    $host = "bo9m0gim6u6i5eoicow2-mysql.services.clever-cloud.com";
+    $user = "ubmohnfap3nnmhx9";
+    $senha = "N4n4OXxBxqGYiAk2zxr6";
+    $banco = "bo9m0gim6u6i5eoicow2";
 }
     $conexao = new mysqli($host, $user, $senha, $banco);
 
@@ -24,7 +24,7 @@
         }
     }
 
-    // criação de tarefa
+    // criar tarefas
     if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['descricao'])){
         $descricao = trim($conexao->real_escape_string($_POST['descricao']));
 
@@ -53,6 +53,21 @@
         }
     }
 
+    // update de tarefas
+    if(isset($_GET['update']) && isset($_POST['updatevalue'])){
+
+        $id = intval($_GET['update']);
+        $novadesc = trim($conexao->real_escape_string($_POST['updatevalue']));
+
+        $sqlUpdate = "UPDATE tarefas SET descricao = '$novadesc' WHERE id = $id";
+
+        if($conexao->query($sqlUpdate) === TRUE){
+            header("Location: todoList.php");
+            exit;
+        }
+    }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -77,6 +92,16 @@
                 <li>
                   <?php  echo $tarefa['descricao']; ?>
                   <a href= "todoList.php?delete=<?php echo $tarefa['id'] ?>"> - Excluir</a>
+                  <a href = "todolist.php?update=<?php echo $tarefa['id'] ?>"> - Atualizar </a>
+
+                  <?php if(isset($_GET['update']) && $_GET['update'] == intval($tarefa['id'])): ?>
+                    <form action="todolist.php?update=<?php echo $tarefa['id'] ?>" method = "POST">
+                        <input type = "text" placeholder = "Nova descricao" name = 'updatevalue' required>
+                        <button type = "submit">Atualizar</button>
+                    </form>
+                    <?php endif;?> 
+                    
+
                 </li>
             <?php endforeach; ?>
         </ul>
