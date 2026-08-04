@@ -1,5 +1,5 @@
 
-package Aula4;
+
 
 
 class Pessoa2 {
@@ -16,7 +16,7 @@ class Pessoa2 {
 public class MaiorPessoa {
 
 	int Pessoa2 maiorIdade( Pessoa2[] pessoas){
-		Integer maior = 0;
+		int maior = 0;
 		for(int i = 0; i < pessoas.length; i++) {
 			if(pessoas[i].idade > maior) {
 				maior = pessoas[i].idade;

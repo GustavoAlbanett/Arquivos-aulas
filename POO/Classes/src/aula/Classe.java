@@ -1,6 +1,3 @@
-package aula;
-
-
 class Pessoa {
 	// atributos
 	String nome;

@@ -3,13 +3,21 @@ import java.util.Random;
 public class Main {
     public static void main(String[] args) {
         Animal[] animais = new Animal[100];
-        PreencherRandom(animais);
-        PrintAnimais(animais);
+        
+		Animal a = new Animal();
+		Cachorro c = new Cachorro();
+		Passaro p = new Passaro();
+		Gato g = new Gato();
+		
+		a.EmitirSom();
+		c.EmitirSom();
+		p.EmitirSom();
+		g.EmitirSom();
 
     }
     public static void PrintAnimais(Animal[] animais){
         for(Animal vet: animais){
-            vet.fale();
+            vet.EmitirSom();
         }
     }
     public static void PreencherRandom(Animal[] vet){
@@ -27,26 +35,26 @@ class Animal{
     String nome;
     int idade;
 
-    public void fale(){
-        System.out.println("Sou um animal e n sei falar rsrs");
+    public void EmitirSom(){
+        System.out.println("Barulho Generico de animal");
     }
 }
 
 class Cachorro extends Animal{
-    //public void fale(){
-    //System.out.println("Au au");
-    //}
+    public void EmitirSom(){
+    System.out.println("Au au");
+    }
 }
 
 class Gato extends Animal{
-    public void fale(){
+    public void EmitirSom(){
         System.out.println("miau");
     }
 }
 
 class Passaro extends Animal{
 
-    public void fale(){
-        System.out.println("bem-tivi tuc");
+    public void EmitirSom(){
+        System.out.println("bem-tivi");
     }
 }
