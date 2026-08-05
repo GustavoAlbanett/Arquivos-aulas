@@ -46,77 +46,18 @@ Instrucao decode(uint16_t instrucao){
 }
 
 void writeBack(Instrucao codigos, int ULA, int ciclo){
-	if(codigos.formato == 0){
-		switch (codigos.opcode){
-
-		case 0: // ADD
-			printf("Ciclo %d: ADD -> R%d = R%d(%d) + R%d(%d) = %d\n", ciclo, codigos.destino, codigos.reg1, regs[codigos.reg1], codigos.reg2, regs[codigos.reg2], ULA);
-			regs[codigos.destino] = ULA;
-			break;
-
-		case 1: // SUB
-			printf("Ciclo %d: SUB -> R%d = R%d(%d) - R%d(%d) = %d\n", ciclo, codigos.destino, codigos.reg1, regs[codigos.reg1], codigos.reg2, regs[codigos.reg2], ULA);
-			regs[codigos.destino] = ULA;
-
-			break;
-
-		case 2: // MUL
-			printf("Ciclo %d: MUL -> R%d = R%d(%d) * R%d(%d) = %d\n", ciclo, codigos.destino, codigos.reg1, regs[codigos.reg1], codigos.reg2, regs[codigos.reg2], ULA);
-			regs[codigos.destino] = ULA;
-			break;
-
-		case 3: // DIV
-			printf("Ciclo %d: DIV -> R%d = R%d(%d) / R%d(%d) = %d\n", ciclo, codigos.destino, codigos.reg1, regs[codigos.reg1], codigos.reg2, regs[codigos.reg2], ULA);
-			regs[codigos.destino] = ULA;
-			break;
-		
-		case 4 : // CMP_EQUAL
-			printf("Ciclo %d: CMP EQUAL -> R%d = (R%d == R%d) = %d\n", ciclo, codigos.destino, codigos.reg1, codigos.reg2, ULA);
-			regs[codigos.destino] = ULA;
-			break;
-
-		case 5 : // CMP_NEQ
-			printf("Ciclo %d: CMP NEQ -> R%d = R%d != R%d = %d\n", ciclo, codigos.destino, codigos.reg1, codigos.reg2, ULA);
-			regs[codigos.destino] = ULA;
-			break;
-
-		case 15: // LOAD
-			printf("Ciclo %d: LOAD -> R%d = R%d(%d)\n", ciclo, codigos.destino, codigos.reg1, regs[codigos.destino]);
-			regs[codigos.destino] = memoria[regs[codigos.reg1]];
-			break;
-
-		case 16: // STORE
-			printf("Ciclo %d: STORE -> Mem[%d] = R%d(%d)\n", ciclo, regs[codigos.reg1], codigos.reg2, regs[codigos.reg2]);
-			memoria[regs[codigos.reg1]] = regs[codigos.reg2];
-			break;
-
-		default:
-			printf("Instrucao desconhecida.\n");
-			break;
-		}
+	if(codigos.formato == 0 && codigos.opcode <= 5){    // iNSTRUÇÕES ARTIMEDICAS
+		regs[codigos.destino] = ULA;
 	}
-	else{
-		switch (codigos.opcode){
-
-		case 0: // JUMP
-			printf("Ciclo %d: JUMP -> Pulando para o endereco: %d\n", ciclo, PC);
-			break;
-
-		case 1: // JUMP COND
-			printf("Ciclo %d: JUMP COND -> Pulando para o endereco: %d\n", ciclo, PC);
-			break;
-
-		case 3: // MOV
-			regs[codigos.reg] = codigos.imediato;
-			printf("Ciclo %d: MOV -> R%d <- %d\n", ciclo, codigos.reg, codigos.imediato);
-			break;
-		
-		default:
-			printf("Instrucao desconhecida.\n");
-			break;
-		
-		}
+	else if(codigos.formato == 0 && codigos.opcode == 15){   //LOAD
+		regs[codigos.destino] = memoria[regs[codigos.reg1]];
 	}
+	else if(codigos.formato == 0 && codigos.opcode == 16){   // STORE
+		memoria[regs[codigos.reg1]] = regs[codigos.reg2];
+	}else{
+		regs[codigos.reg] = codigos.imediato;   //   IMEDIATO MOVE
+	}
+
 }
 
 int execucao(Instrucao codigos, int ciclo){
@@ -127,14 +68,17 @@ int execucao(Instrucao codigos, int ciclo){
 
 		case 0 : // 0    ADD
 			ULA = regs[codigos.reg1] + regs[codigos.reg2];
+			printf("Ciclo %d: ADD -> R%d = R%d(%d) + R%d(%d) = %d\n", ciclo, codigos.destino, codigos.reg1, regs[codigos.reg1], codigos.reg2, regs[codigos.reg2], ULA);			
 			break;
 
 		case 1 : // 1     SUB
 			ULA = regs[codigos.reg1] - regs[codigos.reg2];
+			printf("Ciclo %d: SUB -> R%d = R%d(%d) - R%d(%d) = %d\n", ciclo, codigos.destino, codigos.reg1, regs[codigos.reg1], codigos.reg2, regs[codigos.reg2], ULA);
 			break;
 
 		case 2 : // 2    MUL
 			ULA = regs[codigos.reg1] * regs[codigos.reg2];
+			printf("Ciclo %d: MUL -> R%d = R%d(%d) * R%d(%d) = %d\n", ciclo, codigos.destino, codigos.reg1, regs[codigos.reg1], codigos.reg2, regs[codigos.reg2], ULA);
 			break;
 
 		case 3 : // 3    DIV
@@ -143,6 +87,7 @@ int execucao(Instrucao codigos, int ciclo){
 				exit(0);
 			}
 			ULA = regs[codigos.reg1] / regs[codigos.reg2];
+			printf("Ciclo %d: DIV -> R%d = R%d(%d) / R%d(%d) = %d\n", ciclo, codigos.destino, codigos.reg1, regs[codigos.reg1], codigos.reg2, regs[codigos.reg2], ULA);
 			break;
 		
 		case 4 : // CMP_EQUAL
@@ -151,6 +96,7 @@ int execucao(Instrucao codigos, int ciclo){
 			}else{
 				ULA = 0;
 			}
+			printf("Ciclo %d: CMP EQUAL -> R%d = (R%d == R%d) = %d\n", ciclo, codigos.destino, codigos.reg1, codigos.reg2, ULA);
 			break;
 
 		case 5 : // CMP_NEQ
@@ -160,12 +106,15 @@ int execucao(Instrucao codigos, int ciclo){
 			else {
 				ULA = 0;
 			}
+			printf("Ciclo %d: CMP NEQ -> R%d = R%d != R%d = %d\n", ciclo, codigos.destino, codigos.reg1, codigos.reg2, ULA);
 			break;
 
 		case 15 : //4   LOAD
+			printf("Ciclo %d: LOAD -> R%d = R%d(%d)\n", ciclo, codigos.destino, codigos.reg1, regs[codigos.destino]);
 			break;
 		
 		case 16 : // 5   STORE
+			printf("Ciclo %d: STORE -> Mem[%d] = R%d(%d)\n", ciclo, regs[codigos.reg1], codigos.reg2, regs[codigos.reg2]);
 			break;
 		
 		case 63 : // 63   syscall END
@@ -184,20 +133,23 @@ int execucao(Instrucao codigos, int ciclo){
 
 		case 0 : // 0    JUMP
 			PC = codigos.imediato;
+			printf("Ciclo %d: JUMP -> Pulando para o endereco: %d\n", ciclo, PC);
 			break;
 
 		case 1 : // 1     JUMP COND
 			if(regs[codigos.reg] ==1){
 				PC = codigos.imediato;
 			}
+			printf("Ciclo %d: JUMP COND -> Pulando para o endereco: %d\n", ciclo, PC);
 			break;
 
 		case 3 : // 3    MOV
+			printf("Ciclo %d: MOV -> R%d <- %d\n", ciclo, codigos.reg, codigos.imediato);
 			break;
 
 		default:
 			printf("Instrucao desconhecida, Ciclo %d\n", ciclo);
-			break;
+			exit(0);
 			}
 	}
 	return ULA;
