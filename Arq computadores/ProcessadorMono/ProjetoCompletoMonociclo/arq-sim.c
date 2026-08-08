@@ -54,7 +54,7 @@ void writeBack(Instrucao codigos, int ULA, int ciclo){
 	}
 	else if(codigos.formato == 0 && codigos.opcode == 16){   // STORE
 		memoria[regs[codigos.reg1]] = regs[codigos.reg2];
-	}else{
+	}else if(codigos.formato == 1 && codigos.opcode == 3){
 		regs[codigos.reg] = codigos.imediato;   //   IMEDIATO MOVE
 	}
 
@@ -110,7 +110,7 @@ int execucao(Instrucao codigos, int ciclo){
 			break;
 
 		case 15 : //4   LOAD
-			printf("Ciclo %d: LOAD -> R%d = R%d(%d)\n", ciclo, codigos.destino, codigos.reg1, regs[codigos.destino]);
+			printf("Ciclo %d: LOAD -> R%d = R%d(%d)\n", ciclo, codigos.destino, codigos.reg1, memoria[regs[codigos.reg1]]);
 			break;
 		
 		case 16 : // 5   STORE
@@ -139,8 +139,10 @@ int execucao(Instrucao codigos, int ciclo){
 		case 1 : // 1     JUMP COND
 			if(regs[codigos.reg] ==1){
 				PC = codigos.imediato;
+				printf("Ciclo %d: JUMP COND -> Pulando para o endereco: %d\n", ciclo, PC);
+				break;
 			}
-			printf("Ciclo %d: JUMP COND -> Pulando para o endereco: %d\n", ciclo, PC);
+			printf("Ciclo %d: JUMP COND NAO REALIZADO", ciclo);
 			break;
 
 		case 3 : // 3    MOV
